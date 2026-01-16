@@ -29,4 +29,3 @@ class Rura:
             painter.drawPath(path)
         
         
-
