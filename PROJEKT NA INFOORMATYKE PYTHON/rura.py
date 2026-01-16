@@ -2,7 +2,7 @@ from PyQt5.QtGui import QPainter, QColor, QPen, QPainterPath
 from PyQt5.QtCore import Qt, QTimer, QPointF
 
 class Rura:
-    def __init__(self, punkty, grubosc = 15, kolor=Qt.gray):
+    def __init__(self, punkty, grubosc = 15, kolor=Qt.white):
         self.punkty = [QPointF(float (p[0]), float(p[1])) for p in punkty]
         self.grubosc = grubosc
         self.kolor_rury = kolor
@@ -24,7 +24,7 @@ class Rura:
         painter.setBrush(Qt.NoBrush)
         painter.drawPath(path)
         if self.czy_plynie:
-            pen_ciecz = QPen(self.kolor_cieczy, self.grubosc - 2, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
+            pen_ciecz = QPen(self.kolor_cieczy, self.grubosc - 4, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin)
             painter.setPen(pen_ciecz)
             painter.drawPath(path)
         
