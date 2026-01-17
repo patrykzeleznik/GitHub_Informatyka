@@ -117,6 +117,26 @@ def ustaw_logike(app):
                 app.btn10.setText("Zatrzymaj")
             app.running10 = not app.running10
             app.update()
+            
+        elif nr_procesu == 11:
+            if app.running11:
+                app.timer11.stop()
+                app.btn11.setText("Wznow")
+            else:
+                app.timer11.start(20)
+                app.btn11.setText("Zatrzymaj")
+            app.running11 = not app.running11
+            app.update()
+            
+        elif nr_procesu == 12:
+            if app.running12:
+                app.timer12.stop()
+                app.btn12.setText("Wznow")
+            else:
+                app.timer12.start(20)
+                app.btn12.setText("Zatrzymaj")
+            app.running12 = not app.running12
+            app.update()
 
     def pompowanie_cieczy(nr_procesu):
         pompowanie = False
@@ -194,6 +214,11 @@ def ustaw_logike(app):
         if app.z1.aktualna_ilosc > 0:
             app.z1.temp = min(100, app.z1.temp + 4)
             app.update()
+            
+    def dodaj_zimnej_z1():
+        if app.z1.aktualna_ilosc > 0:
+            app.z1.temp = max(0, app.z1.temp - 4)
+            app.update()
 
     def reguluj_poziom():
         if app.running3:
@@ -203,7 +228,7 @@ def ustaw_logike(app):
         if abs(roznica) <= tolerancja:
             app.running10 = not app.running10
             app.timer10.stop()
-            app.btn10.setText("Reguluj z4 z5")
+            app.btn10.setText("Reguluj Poziom(Dolne Zbiorniki)")
             app.running7 = False
             app.timer7.stop()
             app.btn7.setText("Opompuj")
@@ -261,6 +286,80 @@ def ustaw_logike(app):
             app.r4.ustawienie_przeplywu(True)
         else:
             app.r4.ustawienie_przeplywu(False)
+            
+    def reguluj_temperature():
+        roznica = app.z4.temp - app.z5.temp
+        tolerancja = 1
+        if abs(roznica) <= tolerancja:
+            app.running11 = False
+            app.timer11.stop()
+            app.btn11.setText("Reguluj Temperature(Dolne Zbiorniki)")
+        if roznica > 1:
+            app.z5.temp = min(100, app.z5.temp + 0.2)
+            app.z4.temp = min(100, app.z4.temp - 0.2)
+            app.running3 = False
+            app.timer3.stop()
+            app.btn3.setText("Otworz zawory")
+            for r in [app.r1, app.r2, app.r3, app.r4]:
+                r.ustawienie_przeplywu(False)
+            app.running2 = False
+            app.timer2.stop()
+            app.btn2.setText("Pompuj")
+            app.r6.ustawienie_przeplywu(False)
+            app.running8 = False
+            app.timer8.stop()
+            app.btn8.setText("Odpompuj")
+            app.r11.ustawienie_przeplywu(False)
+            app.running4 = False
+            app.timer4.stop()
+            app.btn4.setText("Pompuj")
+            app.r8.ustawienie_przeplywu(False)
+            app.running7 = False
+            app.timer7.stop()
+            app.btn7.setText("Odpompuj")
+            app.r10.ustawienie_przeplywu(False)
+            app.running5 = False
+            app.timer5.stop()
+            app.btn5.setText("Pompuj")
+            app.r7.ustawienie_przeplywu(False)
+            app.running6 = False
+            app.timer6.stop()
+            app.btn6.setText("Pompuj")
+            app.r9.ustawienie_przeplywu(False)
+            app.update()
+        else:
+            app.z4.temp = min(100, app.z4.temp + 0.2)
+            app.z5.temp = min(100, app.z5.temp - 0.2)
+            app.running3 = False
+            app.timer3.stop()
+            app.btn3.setText("Otworz zawory")
+            for r in [app.r1, app.r2, app.r3, app.r4]:
+                r.ustawienie_przeplywu(False)
+            app.running2 = False
+            app.timer2.stop()
+            app.btn2.setText("Pompuj")
+            app.r6.ustawienie_przeplywu(False)
+            app.running8 = False
+            app.timer8.stop()
+            app.btn8.setText("Odpompuj")
+            app.r11.ustawienie_przeplywu(False)
+            app.running4 = False
+            app.timer4.stop()
+            app.btn4.setText("Pompuj")
+            app.r8.ustawienie_przeplywu(False)
+            app.running7 = False
+            app.timer7.stop()
+            app.btn7.setText("Odpompuj")
+            app.r10.ustawienie_przeplywu(False)
+            app.running5 = False
+            app.timer5.stop()
+            app.btn5.setText("Ppompuj")
+            app.r7.ustawienie_przeplywu(False)
+            app.running6 = False
+            app.timer6.stop()
+            app.btn6.setText("Pompuj")
+            app.r9.ustawienie_przeplywu(False)
+            app.update()
 
     def logika_przeplywu():
         out_speed = app.flow_speed / 2 
@@ -391,11 +490,27 @@ def ustaw_logike(app):
     
     app.timer10 = QTimer()
     app.timer10.timeout.connect(lambda: app.reguluj_poziom())
-    app.btn10 = QPushButton("Reguluj z4 z5", app)
-    app.btn10.setGeometry(140, 10, 120, 30)
+    app.btn10 = QPushButton("Reguluj Poziom(Dolne Zbiorniki)", app)
+    app.btn10.setGeometry(10, 50, 200, 30)
     app.btn10.setStyleSheet("background-color: #444; color: white; font-weight: bold;")
     app.btn10.clicked.connect(lambda: app.przelacz_symulacje(10))
     app.running10 = False
+    
+    app.timer11 = QTimer()
+    app.timer11.timeout.connect(lambda: reguluj_temperature())
+    app.btn11 = QPushButton("Reguluj Temperature(Dolne Zbiorniki)", app)
+    app.btn11.setGeometry(10, 90, 230, 30)
+    app.btn11.setStyleSheet("background-color: #444; color: white; font-weight: bold;")
+    app.btn11.clicked.connect(lambda: app.przelacz_symulacje(11))
+    app.running11 = False
+    
+    app.timer12 = QTimer()
+    app.timer12.timeout.connect(lambda: dodaj_zimnej_z1())
+    app.btn12 = QPushButton("Ochlodz", app)
+    app.btn12.setGeometry(410, 300, 80, 30)
+    app.btn12.setStyleSheet("background-color: #444; color: white; font-weight: bold;")
+    app.btn12.clicked.connect(lambda: app.przelacz_symulacje(12))
+    app.running12 = False
     
 
 
