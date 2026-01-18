@@ -235,33 +235,32 @@ def ustaw_logike(app):
             app.running8 = False
             app.timer8.stop()
             app.btn8.setText("Opompuj")
+            app.running5 = False
+            app.timer5.stop()
+            app.btn5.setText("Pompuj")
+            app.r9.ustawienie_przeplywu(False)
+            app.running6 = False
+            app.timer6.stop()
+            app.btn6.setText("Pompuj")
+            app.r7.ustawienie_przeplywu(False)
             for r in [app.r3, app.r4, app.r6, app.r8, app.r10, app.r11]:
                 r.ustawienie_przeplywu(False)
             app.update()
             return
         if roznica > 0:
-            app.pompowanie_cieczy(2)
+            app.pompowanie_cieczy(5)
             app.odpompowanie_cieczy(2)
-            app.running4 = False
-            app.timer4.stop()
-            app.btn4.setText("Pompuj")
-            app.r8.ustawienie_przeplywu(False)
             app.running7 = False
             app.timer7.stop()
             app.btn7.setText("Odpompuj")
             app.r10.ustawienie_przeplywu(False)
         else:
-            app.pompowanie_cieczy(3)
+            app.pompowanie_cieczy(4)
             app.odpompowanie_cieczy(1)
-            app.running2 = False
-            app.timer2.stop()
-            app.btn2.setText("Pompuj")
-            app.r6.ustawienie_przeplywu(False)
             app.running8 = False
             app.timer8.stop()
             app.btn8.setText("Odpompuj")
             app.r11.ustawienie_przeplywu(False)
-        app.wymus_przeplyw()
         app.update()
 
     def wymus_przeplyw():
