@@ -262,29 +262,6 @@ def ustaw_logike(app):
             app.btn8.setText("Odpompuj")
             app.r11.ustawienie_przeplywu(False)
         app.update()
-
-    def wymus_przeplyw():
-        out_speed = app.flow_speed / 2
-        if app.z2.aktualna_ilosc > 0.1 and not app.z5.czy_pelny():
-            wsad = app.z2.usun_ciecz(out_speed)
-            total_woda = app.z5.aktualna_ilosc + wsad
-            if total_woda > 0.2:
-                nowa_temp = (app.z5.aktualna_ilosc * app.z5.temp + wsad * app.z2.temp) / total_woda
-                app.z5.temp = nowa_temp
-            app.z5.dodaj_ciecz(wsad)
-            app.r3.ustawienie_przeplywu(True)
-        else:
-            app.r3.ustawienie_przeplywu(False)
-        if app.z3.aktualna_ilosc > 0.1 and not app.z4.czy_pelny():
-            wsad = app.z3.usun_ciecz(out_speed)
-            total_woda = app.z4.aktualna_ilosc + wsad
-            if total_woda > 0.2:
-                nowa_temp = (app.z4.aktualna_ilosc * app.z4.temp + wsad * app.z3.temp) / total_woda
-                app.z4.temp = nowa_temp
-            app.z4.dodaj_ciecz(wsad)
-            app.r4.ustawienie_przeplywu(True)
-        else:
-            app.r4.ustawienie_przeplywu(False)
             
     def reguluj_temperature():
         roznica = app.z4.temp - app.z5.temp
@@ -410,7 +387,6 @@ def ustaw_logike(app):
     app.odpompowanie_cieczy = odpompowanie_cieczy
     app.podgrzewaj_z1 = podgrzewaj_z1
     app.reguluj_poziom = reguluj_poziom
-    app.wymus_przeplyw = wymus_przeplyw
     app.logika_przeplywu = logika_przeplywu
 
     app.flow_speed = 0.8
